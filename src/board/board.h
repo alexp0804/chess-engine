@@ -3,12 +3,6 @@
 
 #include "../common/common.h"
 
-enum color {
-    WHITE,
-    BLACK,
-    NONE
-};
-
 typedef struct board {
     u64 white_pawns;
     u64 white_knights;
@@ -22,10 +16,6 @@ typedef struct board {
     u64 black_rooks;
     u64 black_queens;
     u64 black_king;
-
-    bool white_turn;
-    i32 castling_rights;
-    i32 en_passant_square;
 } board;
 
 #endif // BOARD_H

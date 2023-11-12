@@ -10,13 +10,18 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
-typedef int8_t i8;
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
-
 // https://en.wikipedia.org/wiki/Algebraic_notation_(chess) 
-enum {
+#define N_SQUARES 64
+#define RANK_MIN 0
+#define RANK_MAX 8
+#define FILE_MIN 0
+#define FILE_MAX 8
+
+#define square(file, rank) (file + (7 - rank) * 8)
+#define rank_of(square) (7 - square / 8)
+#define file_of(square) (square % 8)
+void square_print(int square);
+enum SQUARE {
     a8, b8, c8, d8, e8, f8, g8, h8,
     a7, b7, c7, d7, e7, f7, g7, h7,
     a6, b6, c6, d6, e6, f6, g6, h6,
@@ -27,13 +32,32 @@ enum {
     a1, b1, c1, d1, e1, f1, g1, h1
 };
 
+#define north(square) (square - 8)
+#define east(square)  (square + 1)
+#define south(square) (square + 8)
+#define west(square)  (square - 1)
+#define north_east(square) (square - 7)
+#define north_west(square) (square - 9)
+#define south_east(square) (square + 9)
+#define south_west(square) (square + 7)
+
+#define N_SIDES 2
+#define SIDE_MIN 0
+#define SIDE_MAX 2
+enum SIDE {
+    white, black
+};
+
+// Bitboard with every square set except squares in A file, H file, etc
+#define NOT_A_FILE 18374403900871474942ULL
+#define NOT_H_FILE 9187201950435737471ULL
+#define NOT_1_RANK 72057594037927935ULL
+#define NOT_8_RANK 18446744073709551360ULL
+
 #define bitboard_set(bitboard, square) (bitboard |= (1ULL << square))
 #define bitboard_get(bitboard, square) (bitboard & (1ULL << square))
 #define bitboard_clr(bitboard, square) (bitboard &= ~(1ULL << square))
 #define bitboard_tog(bitboard, square) (bitboard ^= (1ULL << square))
-
-#define square(file, rank) file * 8 + rank
-
 void bitboard_print(u64 b);
 
 #endif // COMMON_H

@@ -1,16 +1,26 @@
 #include "common.h"
 
+void square_print(int square)
+{
+    printf("Square #%d: %c%d\n",
+        square,
+        file_of(square) + 'a',
+        rank_of(square) + 1);
+}
+
 void bitboard_print(u64 b) 
 {
-    for (int file = 0; file < 8; file++)
+    for (int rank = RANK_MAX - 1; rank >= RANK_MIN; rank--)
     {
-        printf("  %d ", 8 - file);
-        for (int rank = 0; rank < 8; rank++)
+        printf("  %d ", rank + 1);
+
+        for (int file = FILE_MIN; file < FILE_MAX; file++)
         {
             printf(" %d", bitboard_get(b, square(file, rank)) ? 1 : 0);
         }
+
         printf("\n");
     }
     printf("\n     a b c d e f g h\n");
-    printf("\nBitboard: %ld\n", b);
+    printf("\nBitboard: %lu ULL\n", b);
 }
