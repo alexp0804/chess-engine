@@ -38,21 +38,14 @@ u64 generate_knight_attack(int sq)
 {
     u64 attack = 0ULL;
 
-    // North-west moving
-    attack |= (1ULL << north_north_west(sq)) & NOT_H_FILE & NOT_12_RANK;
-    attack |= (1ULL << north_west_west(sq)) & NOT_GH_FILE & NOT_1_RANK;
-
-    // North-east moving
-    attack |= (1ULL << north_north_east(sq)) & NOT_A_FILE & NOT_12_RANK;
-    attack |= (1ULL << north_east_east(sq)) & NOT_AB_FILE & NOT_1_RANK;
-
-    // South-west moving
-    attack |= (1ULL << south_west_west(sq)) & NOT_GH_FILE & NOT_8_RANK;
-    attack |= (1ULL << south_south_west(sq)) & NOT_H_FILE & NOT_78_RANK;
-
-    // South-east moving
-    attack |= (1ULL << south_east_east(sq)) & NOT_AB_FILE & NOT_8_RANK;
-    attack |= (1ULL << south_south_east(sq)) & NOT_A_FILE & NOT_78_RANK;
+    attack |= (1ULL << north_north_west(sq)) & NOT_H_FILE  & NOT_12_RANK;
+    attack |= (1ULL << north_west_west(sq))  & NOT_GH_FILE & NOT_1_RANK;
+    attack |= (1ULL << north_north_east(sq)) & NOT_A_FILE  & NOT_12_RANK;
+    attack |= (1ULL << north_east_east(sq))  & NOT_AB_FILE & NOT_1_RANK;
+    attack |= (1ULL << south_west_west(sq))  & NOT_GH_FILE & NOT_8_RANK;
+    attack |= (1ULL << south_south_west(sq)) & NOT_H_FILE  & NOT_78_RANK;
+    attack |= (1ULL << south_east_east(sq))  & NOT_AB_FILE & NOT_8_RANK;
+    attack |= (1ULL << south_south_east(sq)) & NOT_A_FILE  & NOT_78_RANK;
 
     return attack;
 }
@@ -67,7 +60,6 @@ void generate_knight_attacks()
             knight_attacks[sq] = generate_knight_attack(sq);
         }
     }
-    return;
 }
 
 void generate_bishop_attacks()
@@ -90,10 +82,9 @@ u64 generate_king_attack(int sq)
     u64 attack = 0ULL;
 
     attack |= (1ULL << north(sq)) & NOT_1_RANK;
-    attack |= (1ULL << east(sq)) & NOT_A_FILE;
+    attack |= (1ULL << east(sq))  & NOT_A_FILE;
     attack |= (1ULL << south(sq)) & NOT_8_RANK;
-    attack |= (1ULL << west(sq)) & NOT_H_FILE;
-
+    attack |= (1ULL << west(sq))  & NOT_H_FILE;
     attack |= (1ULL << north_east(sq)) & NOT_A_FILE & NOT_1_RANK;
     attack |= (1ULL << north_west(sq)) & NOT_H_FILE & NOT_1_RANK;
     attack |= (1ULL << south_east(sq)) & NOT_A_FILE & NOT_8_RANK;
@@ -115,5 +106,4 @@ void generate_king_attacks()
             bitboard_print(king_attacks[sq]);
         }
     }
-    return;
 }
