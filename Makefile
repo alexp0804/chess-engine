@@ -2,7 +2,6 @@ CC = gcc
 CFLAGS = -Wall -Werror
 
 SRCDIR = src
-BINDIR = bin
 OBJDIR = obj
 
 SRC := $(wildcard $(SRCDIR)/**/*.c $(SRCDIR)/*.c)
@@ -12,9 +11,9 @@ TARGET = chess-engine
 
 .PHONY: all clean
 
-all: $(BINDIR)/$(TARGET)
+all: $(TARGET)
 
-$(BINDIR)/$(TARGET): $(OBJ)
+$(TARGET): $(OBJ)
 	@mkdir -p $(@D)
 	$(CC) $^ -o $@
 
@@ -23,4 +22,4 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(BINDIR) $(OBJDIR)
+	rm -rf $(OBJDIR)

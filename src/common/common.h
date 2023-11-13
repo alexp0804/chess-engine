@@ -1,3 +1,4 @@
+
 #ifndef COMMON_H
 #define COMMON_H
 
@@ -41,6 +42,15 @@ enum SQUARE {
 #define south_east(square) (square + 9)
 #define south_west(square) (square + 7)
 
+#define north_north_west(square) (square - 17)
+#define north_north_east(square) (square - 15)
+#define north_west_west(square) (square - 10)
+#define north_east_east(square) (square - 6)
+#define south_west_west(square) (square + 6)
+#define south_east_east(square) (square + 10)
+#define south_south_west(square) (square + 15)
+#define south_south_east(square) (square + 17)
+
 #define N_SIDES 2
 #define SIDE_MIN 0
 #define SIDE_MAX 2
@@ -51,13 +61,20 @@ enum SIDE {
 // Bitboard with every square set except squares in A file, H file, etc
 #define NOT_A_FILE 18374403900871474942ULL
 #define NOT_H_FILE 9187201950435737471ULL
+#define NOT_AB_FILE 18229723555195321596ULL
+#define NOT_GH_FILE 4557430888798830399ULL
 #define NOT_1_RANK 72057594037927935ULL
 #define NOT_8_RANK 18446744073709551360ULL
+#define NOT_12_RANK 281474976710655ULL
+#define NOT_78_RANK 18446744073709486080ULL
+
 
 #define bitboard_set(bitboard, square) (bitboard |= (1ULL << square))
 #define bitboard_get(bitboard, square) (bitboard & (1ULL << square))
 #define bitboard_clr(bitboard, square) (bitboard &= ~(1ULL << square))
 #define bitboard_tog(bitboard, square) (bitboard ^= (1ULL << square))
 void bitboard_print(u64 b);
+
+#include "../attacks/attacks.h"
 
 #endif // COMMON_H

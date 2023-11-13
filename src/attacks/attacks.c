@@ -34,8 +34,39 @@ void generate_pawn_attacks()
     }
 }
 
+u64 generate_knight_attack(int sq)
+{
+    u64 attack = 0ULL;
+
+    // North-west moving
+    attack |= (1ULL << north_north_west(sq)) & NOT_H_FILE & NOT_12_RANK;
+    attack |= (1ULL << north_west_west(sq)) & NOT_GH_FILE & NOT_1_RANK;
+
+    // North-east moving
+    attack |= (1ULL << north_north_east(sq)) & NOT_A_FILE & NOT_12_RANK;
+    attack |= (1ULL << north_east_east(sq)) & NOT_AB_FILE & NOT_1_RANK;
+
+    // South-west moving
+    attack |= (1ULL << south_west_west(sq)) & NOT_GH_FILE & NOT_8_RANK;
+    attack |= (1ULL << south_south_west(sq)) & NOT_H_FILE & NOT_78_RANK;
+
+    // South-east moving
+    attack |= (1ULL << south_east_east(sq)) & NOT_AB_FILE & NOT_8_RANK;
+    attack |= (1ULL << south_south_east(sq)) & NOT_A_FILE & NOT_78_RANK;
+
+    return attack;
+}
+
 void generate_knight_attacks()
 {
+    for (int rank = RANK_MAX - 1; rank >= RANK_MIN; rank--)
+    {
+        for (int file = FILE_MIN; file < FILE_MAX; file++)
+        {
+            int sq = square(file, rank);
+            knight_attacks[sq] = generate_knight_attack(sq);
+        }
+    }
     return;
 }
 

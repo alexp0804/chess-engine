@@ -1,3 +1,4 @@
+
 #include "common.h"
 
 void square_print(int square)

@@ -1,12 +1,9 @@
+
 #include "common/common.h"
-#include "attacks/attacks.h"
 
 int main(void)
 {
-    generate_pawn_attacks();
-    u64 bb = 0ULL;
-
-    bitboard_print(bb);
+    generate_knight_attacks();
 
     return 0;
 }
