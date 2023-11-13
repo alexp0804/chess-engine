@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    generate_knight_attacks();
+    generate_king_attacks();
 
     return 0;
 }

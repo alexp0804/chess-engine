@@ -85,7 +85,35 @@ void generate_queen_attacks()
     return;
 }
 
+u64 generate_king_attack(int sq)
+{
+    u64 attack = 0ULL;
+
+    attack |= (1ULL << north(sq)) & NOT_1_RANK;
+    attack |= (1ULL << east(sq)) & NOT_A_FILE;
+    attack |= (1ULL << south(sq)) & NOT_8_RANK;
+    attack |= (1ULL << west(sq)) & NOT_H_FILE;
+
+    attack |= (1ULL << north_east(sq)) & NOT_A_FILE & NOT_1_RANK;
+    attack |= (1ULL << north_west(sq)) & NOT_H_FILE & NOT_1_RANK;
+    attack |= (1ULL << south_east(sq)) & NOT_A_FILE & NOT_8_RANK;
+    attack |= (1ULL << south_west(sq)) & NOT_H_FILE & NOT_8_RANK;
+
+    return attack;
+}
+
 void generate_king_attacks()
 {
+    for (int rank = RANK_MAX - 1; rank >= RANK_MIN; rank--)
+    {
+        for (int file = FILE_MIN; file < FILE_MAX; file++)
+        {
+            int sq = square(file, rank);
+            king_attacks[sq] = generate_king_attack(sq);
+
+            square_print(sq);
+            bitboard_print(king_attacks[sq]);
+        }
+    }
     return;
 }
