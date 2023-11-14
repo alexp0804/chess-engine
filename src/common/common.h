@@ -18,6 +18,7 @@ typedef uint64_t u64;
 #define FILE_MIN 0
 #define FILE_MAX 8
 
+#define bit_at(sq) ((1ULL << sq))
 #define square(file, rank) (file + (7 - rank) * 8)
 #define rank_of(square) (7 - square / 8)
 #define file_of(square) (square % 8)
@@ -67,6 +68,7 @@ enum SIDE {
 #define NOT_8_RANK 18446744073709551360ULL
 #define NOT_12_RANK 281474976710655ULL
 #define NOT_78_RANK 18446744073709486080ULL
+#define NOT_BORDER (NOT_A_FILE & NOT_H_FILE & NOT_1_RANK & NOT_8_RANK)
 
 
 #define bitboard_set(bitboard, square) (bitboard |= (1ULL << square))

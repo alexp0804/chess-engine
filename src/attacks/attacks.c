@@ -62,19 +62,103 @@ void generate_knight_attacks()
     }
 }
 
+void generate_rook_blocker_bits()
+{
+    for (int rank = RANK_MAX - 1; rank >= RANK_MIN; rank--)
+    {
+        for (int file = FILE_MIN; file < FILE_MAX; file++)
+        {
+            int sq = square(file, rank);
+
+            for (int sq0 = north(sq);
+                 (bit_at(sq0) & NOT_8_RANK & NOT_1_RANK) != 0;
+                 sq0 = north(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = west(sq);
+                 (bit_at(sq0) & NOT_A_FILE & NOT_H_FILE) != 0;
+                 sq0 = west(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = east(sq);
+                 (bit_at(sq0) & NOT_A_FILE & NOT_H_FILE) != 0;
+                 sq0 = east(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = south(sq);
+                 (bit_at(sq0) & NOT_8_RANK & NOT_1_RANK) != 0;
+                 sq0 = south(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+        }
+    }
+}
+
+void generate_bishop_blocker_bits()
+{
+    for (int rank = RANK_MAX - 1; rank >= RANK_MIN; rank--)
+    {
+        for (int file = FILE_MIN; file < FILE_MAX; file++)
+        {
+            int sq = square(file, rank);
+
+            for (int sq0 = north_west(sq);
+                 (bit_at(sq0) & NOT_BORDER) != 0;
+                 sq0 = north_west(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = north_east(sq);
+                 (bit_at(sq0) & NOT_BORDER) != 0;
+                 sq0 = north_east(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = south_east(sq);
+                 (bit_at(sq0) & NOT_BORDER) != 0;
+                 sq0 = south_east(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+
+            for (int sq0 = south_west(sq);
+                 (bit_at(sq0) & NOT_BORDER) != 0;
+                 sq0 = south_west(sq0))
+            {
+                bitboard_set(bishop_blocker_bits[sq], sq0);
+            }
+        }
+    }
+}
+
 void generate_bishop_attacks()
 {
+    generate_bishop_blocker_bits();
     return;
 }
 
 void generate_rook_attacks()
 {
+    generate_rook_blocker_bits();
     return;
 }
 
 void generate_queen_attacks()
 {
-    return;
+    generate_bishop_blocker_bits();
+    generate_rook_blocker_bits();
+
+    for (int i = 0; i < N_SQUARES; i++)
+        queen_blocker_bits[i] = bishop_blocker_bits[i] | rook_blocker_bits[i];
 }
 
 u64 generate_king_attack(int sq)
